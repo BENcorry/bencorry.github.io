@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Corry&#39;s Blob</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Corry&#39;s Blob">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Corry&#39;s Blob">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Corry&#39;s Blob" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Corry&#39;s Blob</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-前端实战-使用GTM和GA对网站精细化埋点" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/23/%E5%89%8D%E7%AB%AF%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8GTM%E5%92%8CGA%E5%AF%B9%E7%BD%91%E7%AB%99%E7%B2%BE%E7%BB%86%E5%8C%96%E5%9F%8B%E7%82%B9/" class="article-date">
+  <time datetime="2020-11-23T11:07:07.000Z" itemprop="datePublished">2020-11-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/23/%E5%89%8D%E7%AB%AF%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8GTM%E5%92%8CGA%E5%AF%B9%E7%BD%91%E7%AB%99%E7%B2%BE%E7%BB%86%E5%8C%96%E5%9F%8B%E7%82%B9/">前端实战-使用GTM和GA对网站精细化埋点</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>现在几乎所有的网站都会使用Google统计分析工具（Google Analyze， 简称GA）对网站进行监控和用户分析，但是GA只能作用于基于url级别的用户跟踪，但是如何利用GA能够争对用户在DOM级别的跟踪？这里我们可能需要使用Google Tag Manager（GTM）对网站进行埋点工作了。</p>
+<hr>
+<p>使用GTM对元素进行埋点的方式主要分为两种，一种是通过GTM的数据变量的功能对页面进行元素定位；还有一种是通过修改网站源代码的方式对埋点元素进行属性的添加</p>
+<h2 id="页面定位埋点"><a href="#页面定位埋点" class="headerlink" title="页面定位埋点"></a>页面定位埋点</h2><ol>
+<li><p>首先我们可能需要找到页面中DOM的位置：<br><img src="https://upload-images.jianshu.io/upload_images/15995962-43b530fc7fc25999.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+</li>
+<li><p>我们可以看到这个元素DOM的class属性和它的文本值，或者其他的一些属性。<br>然后我们通过GTM中的触发器（Target）的功能去对元素进行定位，如图：</p>
+</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-f6b45f3a48fb43ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>从图中我们可以看到，我们选择的触发器类型和触发条件都是点击。所以需要点击的时候才会监听到这个DOM。还有一点是，添加的条件越多，定位的元素更精准~</p>
+<h2 id="代码层级定位埋点"><a href="#代码层级定位埋点" class="headerlink" title="代码层级定位埋点"></a>代码层级定位埋点</h2><p>一般情况下，使用页面定位埋点可以很好的解决大部分问题，但是当我们需要在页面上进行大量埋点的时候，那工作量，想想都是酸爽的，并且即使你埋点完了，维护呢？又是一份很大的工作量。</p>
+<p>这个时候就需要通过代码埋点的方式出场了。</p>
+<h5 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h5><p>这里的定位和上面说的定位差不多，但是，你需要定位的是你源码的位置，因为你需要改代码了！<br>然后在代码位置添加一个自定义属性，如图：<br><img src="https://upload-images.jianshu.io/upload_images/15995962-a9a1fb4c4a92423c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="取值"><a href="#取值" class="headerlink" title="取值"></a>取值</h5><p>我们为什么要在代码层添加一个这么多余且没有用的属性呢？不！他是有用的，我们需要这个自定义属性的值呢。</p>
+<p>但是我们如何去取值呢？</p>
+<p>打开GTM的变量模板，我们定义自己的变量，如图：<br><img src="https://upload-images.jianshu.io/upload_images/15995962-a39fb72fb9fa8a86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>可以清晰的看到上面是一段js的函数代码~ 毕竟这是前端，前端，前端实战嘛。<br>不过有下面几点需要注意：</p>
+<ol>
+<li>在使用GTM选择变量类型的时候，需要选择自定义JavaScript。</li>
+<li>在代码的第二行，我们可以看到一个可能在js中运行会报错的东西–。这是一个GTM内置的一个自动事件变量，但是，虽然这是内置的，但是还是需要你取设置定义这个变量，如图：</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-352e078c5b53efb7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ol start="3">
+<li>属性名字并不是一定要ga-data</li>
+<li>由于前端项目使用的是iview组件，所以我们添加的属性位置不一定是在我们点击的位置，所以我们需要通过遍历的方式向上查询ga-data的属性，所以代码按自己的需求变更，所以就不贴代码了。</li>
+</ol>
+<h5 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h5><p>然后我们通过GTM获取到了我们设置的属性值，在这里我们设置为（1001，1002…），但是这样的数字并不是我们需要的，所以我们需要将这些值赋予其本该存在的意义。在这里我们使用了GTM的对照表功能，如图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-f1f78500e4adf601.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>这样每个值都有其我们需要监听的意义了。</p>
+<h2 id="关联GA和GTM"><a href="#关联GA和GTM" class="headerlink" title="关联GA和GTM"></a>关联GA和GTM</h2><p>我们现在已经将点给埋好了，可是我们最终需要的是实际的数据输出。所以我们需要使用GTM的代码模块进行配置，如图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-e72d4c40563c2d6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-edba6ca4650011f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>在代码类型这里，GTM提供了很多模块，我们需要选择google analytics 模块，这里选择第一个。</p>
+<p>由于我们埋点的方式是点击事件的跟踪，所以选择的跟踪类型选择**<em>事件**</em></p>
+<p>在GA里面，存在着三个事件（event）的内置维度：事件类别（event category），事件操作（evnet action），事件标签（event tag）。所以我们可以通过设置这三个维度给GA传递我们需要传递的值。在这里我设置的事件类别为自定义的一个事件值为固定的，事件操作设置为上述的对照表变量，事件标签设置为页面路径，为了监听每个事件发生的页面。</p>
+<p>跟踪ID设置为你的GA项目ID，为UA-xxxxxx-x 这样的值。</p>
+<p>触发器这里我们需要打开触发器模块，自定义一个触发器，当我们获取到ga-data属性值后，可是我们怎么知道这个ga-data值是否是我们要去监听的元素点呢。所以设置如图：<br><img src="https://upload-images.jianshu.io/upload_images/15995962-9e6ed9e4dc44b09b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>同样的，触发器的类型我们需要选择的是点击-所有元素，触发条件我们设置为我们获取的getGaData的变量值在一定的区间范围内。然后我们将代码中的触发器选择我们设置好的触发器。</p>
+<p>在此，我们设置好了GTM的所有配置，在GTM工作区间的右上角，我们可以看到两个按钮，如图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-714da9c1aae5d7bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>我们可以先通过预览（debug）按钮查看是否存在设置错误问题。若是没有报错我们可以通过点击发布按钮对配置好的项目进行发布，发布后需要几十分钟的时间才会生效。</p>
+<p>生效后，我们打开我们的GA界面，如图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-aff28af26e41a4d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>我们可以通过实时里面的事件界面，通过点击埋点元素，可以看见这里会产生相应数据。</p>
+<p>然后，我们通过GA项目中的行为 =》 事件 =》 概览中可以看到数据（需要次日才能有相应的数据）如图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-ee75363f6c780156.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>然后我们可以看到如下信息：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15995962-ed4c88535e5523fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>使用GA和GTM可以更加精准的对网站进行埋点跟踪，现在市面上也有很多很好的埋点工具（要钱~~），所以，可以根据自己的需求使用这些工具去对自己的网站进行一些运营工作。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/11/23/%E5%89%8D%E7%AB%AF%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8GTM%E5%92%8CGA%E5%AF%B9%E7%BD%91%E7%AB%99%E7%B2%BE%E7%BB%86%E5%8C%96%E5%9F%8B%E7%82%B9/" data-id="ckhug88dw0000t4tw09dpbz8s" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/11/23/%E5%89%8D%E7%AB%AF%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8GTM%E5%92%8CGA%E5%AF%B9%E7%BD%91%E7%AB%99%E7%B2%BE%E7%BB%86%E5%8C%96%E5%9F%8B%E7%82%B9/">前端实战-使用GTM和GA对网站精细化埋点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
